@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Search } from 'lucide-react';
 
@@ -19,7 +18,7 @@ interface Order {
 }
 
 const Orders = () => {
-  const [orders, setOrders] = useState<Order[]>([
+  const [orders] = useState<Order[]>([
     { 
       id: '1', 
       customerName: 'John Doe', 

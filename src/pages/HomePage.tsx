@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Shield, Brain, ShoppingBag, GraduationCap, MessageCircle, Phone, Mail } from 'lucide-react';
+import { ArrowRight, Code, Shield, Brain, ShoppingBag, GraduationCap, MessageCircle, Phone } from 'lucide-react';
 import { WhatsAppService } from '../utils/whatsapp';
 
 gsap.registerPlugin(ScrollTrigger);
