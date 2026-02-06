@@ -1,22 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navigation from './components/Navigation';
 import WhatsAppWidget from './components/WhatsAppWidget';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import TrainingPage from './pages/TrainingPage';
-import MarketplacePage from './pages/MarketplacePage';
-import ContactPage from './pages/ContactPage';
-import AdminLayout from './admin/AdminLayout';
-import Dashboard from './admin/Dashboard';
-import ManageUsers from './admin/ManageUsers';
-import ManageProducts from './admin/ManageProducts';
-import Orders from './admin/Orders';
-import Settings from './admin/Settings';
 import { CartProvider } from './context/CartContext';
+
+// Lazy-loaded route components to reduce initial bundle size
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const TrainingPage = lazy(() => import('./pages/TrainingPage'));
+const MarketplacePage = lazy(() => import('./pages/MarketplacePage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+
+// Admin area (lazy)
+const AdminLayout = lazy(() => import('./admin/AdminLayout'));
+const Dashboard = lazy(() => import('./admin/Dashboard'));
+const ManageUsers = lazy(() => import('./admin/ManageUsers'));
+const ManageProducts = lazy(() => import('./admin/ManageProducts'));
+const Orders = lazy(() => import('./admin/Orders'));
+const Settings = lazy(() => import('./admin/Settings'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,22 +86,24 @@ function App() {
           
           {/* Main content */}
           <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/training" element={<TrainingPage />} />
-              <Route path="/marketplace" element={<MarketplacePage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              
-              {/* Admin Routes */}
-              <Route path="/admin" element={<AdminLayout />}/>
-              <Route path="/admin/dashboard" element={<Dashboard />} />
-              <Route path="/admin/users" element={<ManageUsers />} />
-              <Route path="/admin/products" element={<ManageProducts />} />
-              <Route path="/admin/orders" element={<Orders />} />
-              <Route path="/admin/settings" element={<Settings />} />
-            </Routes>
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-[#00F0FF]">Loading...</div>}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/training" element={<TrainingPage />} />
+                <Route path="/marketplace" element={<MarketplacePage />} />
+                <Route path="/contact" element={<ContactPage />} />
+
+                {/* Admin Routes */}
+                <Route path="/admin" element={<AdminLayout />}/>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/users" element={<ManageUsers />} />
+                <Route path="/admin/products" element={<ManageProducts />} />
+                <Route path="/admin/orders" element={<Orders />} />
+                <Route path="/admin/settings" element={<Settings />} />
+              </Routes>
+            </Suspense>
           </main>
           
           {/* WhatsApp Widget */}
